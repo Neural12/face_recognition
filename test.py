@@ -19,17 +19,17 @@ def new_learning_rate(epoch, lr):
 #     else:
 #         return 0.0001
 
-alan_ritchson_folder = r"C:\Users\petim\OneDrive\Dokumentumok\NeuroPython\kepek\alan_ritchson"
+person1_folder = r"path"
 
-harry_kane_folder = r"C:\Users\petim\OneDrive\Dokumentumok\NeuroPython\kepek\harry_kane"
+person2_folder = r"path"
 
-vinicius_junior_folder = r"C:\Users\petim\OneDrive\Dokumentumok\NeuroPython\kepek\vinicius_junior"
+person3_folder = r"path"
 
-dwayne_johnson_folder = r"C:\Users\petim\OneDrive\Dokumentumok\NeuroPython\kepek\dwayne"
+person4_folder = r"path"
 
-sydney_sweeney_folder = r"C:\Users\petim\OneDrive\Dokumentumok\NeuroPython\kepek\sydney"
+person5_folder = r"path"
 
-tewfik_jallab_folder = r"C:\Users\petim\OneDrive\Dokumentumok\NeuroPython\kepek\tewfik_jallab"
+person6_folder = r"path"
 
 name_to_image = {}
 
@@ -44,12 +44,12 @@ def load_images(folder):
             name_to_image[name] = os.path.join(folder, image_file)
 
 
-load_images(alan_ritchson_folder)
-load_images(harry_kane_folder)
-load_images(vinicius_junior_folder)
-load_images(dwayne_johnson_folder)
-load_images(sydney_sweeney_folder)
-load_images(tewfik_jallab_folder)
+load_images(person1_folder)
+load_images(person2_folder)
+load_images(person3_folder)
+load_images(person4_folder)
+load_images(person5_folder)
+load_images(person6_folder)
 
 X = []
 y = []
@@ -59,17 +59,17 @@ for name, image_path in name_to_image.items():
     img_array = img_to_array(img)
 
     X.append(img_array)
-    if name.startswith("alan"):
+    if name.startswith("person1"):
         y.append(0)  
-    elif name.startswith("harry"):
+    elif name.startswith("person2"):
         y.append(1)
-    elif name.startswith("vinicius"):
+    elif name.startswith("person3"):
         y.append(2)
-    elif name.startswith("dwayne"):
+    elif name.startswith("person4"):
         y.append(3)
-    elif name.startswith("sydney"):
+    elif name.startswith("person5"):
         y.append(4)
-    elif name.startswith("tewfik"):
+    elif name.startswith("person6"):
         y.append(5)
 
 X = np.array(X)
@@ -150,8 +150,8 @@ def predict_person(image_path, model):
     faces = face_cascade.detectMultiScale(gray_img, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
     if len(faces) == 0:
-        print("Nem található arc a képen.")
-        return "Nem található arc", 0.0
+        print(" No face detected.")
+        return "No face detected", 0.0
 
     for (x, y, w, h) in faces:
         cv2.rectangle(rgb_img, (x, y), (x+w, y+h), (255, 0, 0), 2)  
@@ -171,24 +171,24 @@ def predict_person(image_path, model):
     confidence = prediction[0][predicted_class]
 
     if confidence < 0.5:
-        return "Ismeretlen", confidence
+        return "Unknown", confidence
     elif predicted_class == 0:
-        return "Alan Ritchson", confidence
+        return "Person1", confidence
     elif predicted_class == 1:
-        return "Harry Kane", confidence
+        return "Person2", confidence
     elif predicted_class == 2:
-        return "Vinicius Junior", confidence
+        return "Person3", confidence
     elif predicted_class == 3:
-        return "Dwayne Johnson", confidence
+        return "Person4", confidence
     elif predicted_class == 4:
-        return "Sydney Sweeney", confidence
+        return "Person5", confidence
     elif predicted_class == 5:
-        return "Tewfik Jallab", confidence
+        return "Person6", confidence
 
 
-image_path = r"C:\Users\petim\Downloads\alan.jpg"
+image_path = r"your_image"
 person, confidence = predict_person(image_path, model)
-print("Azonosított személy vagy értesítés:", person)
-print("Bizalmi érték:", confidence)
+print("Identified person: ", person)
+print("Confidence score: ", confidence)
 
 
